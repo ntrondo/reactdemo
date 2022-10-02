@@ -1,23 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HistogramItem from "./HistogramItem";
-
-function SetInitialIndices(items){
-    let i = 0;
-    items.forEach(item => {
-        if(item.index != item.id)
-            item.setIndex(item.id)
-    });
-}
-function Histogram({ itemModels }) {
+function Histogram({ options }) {   
+    const [items, setItems] = useState([]); 
     useEffect(()=>
     {
-        setTimeout(()=>{SetInitialIndices(itemModels)}, 2000)
-    },[])
+        //console.log("Histogram useEffect()")
+        let existingFn = options.setItems
+        options.setItems=(items)=>{
+            existingFn(items)
+            setItems(items)
+        }
+        setItems(options.items)
+    })
+    if(options.items == null)
+    return null
     return (
         <div className="has-background-blue is-full-width is-histogram">
             {
-                itemModels.map(item => {
-                    return <HistogramItem key={item.id} itemModel={item} totalItems={itemModels.length} />
+                options.items.map(item => {
+                    return <HistogramItem key={item.id} itemModel={item} options={options} />
                 })
             }
         </div>

@@ -14,20 +14,53 @@
 .has-background-gray{
     background-color: slategrey;
 }
-.has-background-yellow{
-    background-color: lightyellow;
-}
-.has-background-blue{
-    background-color: lightblue;
+.has-background-black{
+    background-color: black;
 }
 .is-histogram{
     position: relative;
     display: inline-block;
 }
+
 .is-histogram-item{
-    background-color: blue;
+    background-image: linear-gradient(rgb(49, 1, 49), rgb(110, 2, 101));
     overflow: hidden;
     display: inline-block;
     position: absolute;
-    transition: left 1s;
+    /* transition: left 1s; */
+}
+.is-controlpanel{
+    display: flex;
+    color:white;
+}
+.is-vertical-menu{
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-image: linear-gradient(rgb(76, 143, 182), rgb(1, 74, 97));
+}
+.is-vertical-menu>div{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.is-options{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-image: linear-gradient(rgb(75, 99, 235) , rgb(20, 3, 53));
+}
+.is-options > div{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+a.is-button{
+    text-decoration: none;
+    
+}
+a.is-button:hover{
+    cursor: pointer;
 }
