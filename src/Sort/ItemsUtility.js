@@ -1,5 +1,7 @@
+import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
 import {default as BubbleSort} from "./BubbleSort";
 import {default as InsertionSort} from "./InsertionSort";
+import {default as SelectionSort} from "./SelectionSort";
 
 export function GenerateInitialItemModels(count) {
     let ids = Array.from({ length: count }, (_, i) => i)
@@ -19,9 +21,17 @@ export function Sort(options) {
     const values = items.map(i => { return { id: i.id, value: i.height } })
     
     const comp = (a, b) => { return (a.value - b.value) * (options.asc ? 1 : -1) }
-    const sort = options.algorithm == "bubblesort" ? BubbleSort : InsertionSort
+    const sort = GetSortAlgorithm(options)
     options.moves = sort(values, comp, move)
     AnimateMoves(options)
+}
+function GetSortAlgorithm(options){
+    switch(options.algorithm){
+        case "bubblesort": return BubbleSort
+        case "insertionsort": return InsertionSort
+        case "selectionsort": return SelectionSort
+        default: alert("Unsupported sorting algorithm '" + options.algorithm + "'")
+    }
 }
 function AnimateMoves(options) {    
     if(options.moves.length > 0)

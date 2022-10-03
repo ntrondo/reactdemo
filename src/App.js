@@ -7,7 +7,7 @@ function App() {
   const [options,] = useState(() => {
     const val = {
       items: null,
-      asc: false,
+      asc: true,
       algorithm: "bubblesort",
       pause: 500,
       setShowOptions: (show) => { },
@@ -24,6 +24,7 @@ function App() {
     val.setItems = (items) => {
       //console.log("options setItems") 
       val.items = items 
+      val.setSorted(false)
     }
     return val
   })
