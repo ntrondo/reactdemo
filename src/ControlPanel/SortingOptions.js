@@ -8,7 +8,7 @@ export default function SortingOptions(wrappedOptions) {
     const[showOptions,setShowOptions] = useState(options.showOptions)
     useEffect(()=>{
         console.log("SortingOptions useEffect()")        
-        options.setItems(GenerateInitialItemModels(10))
+        options.setItems(GenerateInitialItemModels(20))
         options.setShowOptions= combineFunctions(options.setShowOptions, setShowOptions)
     },[])
     const algorithmChanged = (e)=>{
@@ -47,7 +47,7 @@ export default function SortingOptions(wrappedOptions) {
             </div>
             <div>
                 <label>Count:</label>
-                <select defaultValue="10" onChange={countChanged}>
+                <select defaultValue="20" onChange={countChanged}>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
