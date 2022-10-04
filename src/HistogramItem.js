@@ -1,43 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { combineFunctions } from "./State";
 
-function GetIndex(itemModel){
+function GetIndex(itemModel) {
     return itemModel.index
 }
-function CalculateStyles(item, options){
+function CalculateBaseStyles(item, options) {
     let margin = 1;
-    let width = Math.floor(100 / options.items.length - 2 * margin)    
-    let left = item.index * (width + 2 * margin);    
     let height = item.height * 100;
-    let top = 100 - height;
-    let myStyle = {
-        top:top + "%",
-        left:left + "%",
+    return {
+        margin: margin,
         height: height + "%",
-        width: width + "%",
-        margin:"0 " + margin + "% 0 " + margin + "%"    ,
-        transition:"left " + options.pause + "ms"    
+        top: (100 - height) + "%",
+        width: Math.floor(100 / options.items.length - 2 * margin),
+        transition: "left " + options.pause + "ms"
     }
-    if(item.isHighlighted)
-        myStyle.backgroundImage ="linear-gradient(gold, red)"
+}
+function CalculateStyles(baseStyles, item) {
+    let left = item.index * (baseStyles.width + 2 * baseStyles.margin);
+    let myStyle = {
+        top: baseStyles.top,
+        height: baseStyles.height,
+        width: baseStyles.width + "%",
+        transition: baseStyles.transition,
+        left: left + "%"
+    }
+    if (item.isHighlighted)
+        myStyle.backgroundImage = "linear-gradient(gold, red)"
     return myStyle
 }
-export default function HistogramItem({itemModel, options}){
-    //console.log("HistogramItem.Render(item:" + itemModel.id + ")");
-    const[, setIndex] = useState(()=>{ return GetIndex(itemModel)})
-    const[, setIsHighlighted] = useState(false);
-    const styles = CalculateStyles(itemModel,options)
-    useEffect(()=>{
-        itemModel.setIndex = function(newIndex){
-            itemModel.index = newIndex
-            setIndex(newIndex)
-        } 
-        itemModel.setIsHighlighted = function(isHighlighted){
-            itemModel.isHighlighted = isHighlighted
-            setIsHighlighted(isHighlighted)
-        }
-    },[itemModel])
-    
-    return(
+export default function HistogramItem({ itemModel, options }) {
+    const [index, setIndex] = useState(() => { return GetIndex(itemModel) })
+    const [isHighlighted, setIsHighlighted] = useState(itemModel.isHighlighted);
+    const baseStyles = useMemo(() => {
+        return CalculateBaseStyles(itemModel, options)
+    },[])
+    const styles = useMemo(() => {
+        return CalculateStyles(baseStyles, itemModel)
+    }, [index, isHighlighted])
+    useEffect(() => {
+        itemModel.setIndex = combineFunctions(itemModel.setIndex, (ni) => {
+            itemModel.index = ni
+        })
+        itemModel.setIndex = combineFunctions(itemModel.setIndex, setIndex)
+        itemModel.setIsHighlighted = combineFunctions(itemModel.setIsHighlighted, (ih) => {
+            itemModel.isHighlighted = ih
+        })
+        itemModel.setIsHighlighted = combineFunctions(itemModel.setIsHighlighted, setIsHighlighted)
+    }, [itemModel])
+    return (
         <div className="is-histogram-item" style={styles}>
         </div>
     )

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Sort } from "../Sort/ItemsUtility";
+import { combineFunctions } from "../State";
 
 function renderPlayButton(showPlayButton, onClicked) {
     if (!showPlayButton)
@@ -19,18 +20,10 @@ export default function VerticalMenu(wrappedOptions) {
     const options = wrappedOptions.options
     const [sorting, setSorting] = useState(options.sorting)
     const [sorted, setSorted] = useState(options.sorted)
-    useEffect(()=>{
-        const ossorting = options.setSorting
-        options.setSorting=(sorting)=>{
-            ossorting(sorting)
-            setSorting(sorting)
-        }
-        const ossorted = options.setSorted
-        options.setSorted = options.setSorted=(sorted)=>{
-            ossorted(sorted)
-            setSorted(sorted)
-        }
-    })
+    useEffect(()=>{  
+        options.setSorting = combineFunctions(options.setSorting, setSorting)
+        options.setSorted = combineFunctions(options.setSorted, setSorted)
+    },[])
 
     const playClicked = (e) => {
         console.log("play clicked");

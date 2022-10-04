@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import {GenerateInitialItemModels} from "../Sort/ItemsUtility"
 import { Sort } from "../Sort/ItemsUtility";
+import { combineFunctions } from "../State";
 
 export default function SortingOptions(wrappedOptions) {
     const options = wrappedOptions.options
     const[showOptions,setShowOptions] = useState(options.showOptions)
     useEffect(()=>{
         console.log("SortingOptions useEffect()")        
-        options.setItems(GenerateInitialItemModels(15))
-        options.setShowOptions=(show)=>{
-            options.showOptions = show
-            setShowOptions(show)
-        }
+        options.setItems(GenerateInitialItemModels(10))
+        options.setShowOptions= combineFunctions(options.setShowOptions, setShowOptions)
     },[])
     const algorithmChanged = (e)=>{
         const value = e.target.value
@@ -49,7 +47,10 @@ export default function SortingOptions(wrappedOptions) {
             </div>
             <div>
                 <label>Count:</label>
-                <select defaultValue="15" onChange={countChanged}>
+                <select defaultValue="10" onChange={countChanged}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>

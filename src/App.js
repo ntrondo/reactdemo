@@ -1,34 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Histogram from "./Histogram";
 import ControlPanel from "./ControlPanel/Panel";
-import { GenerateInitialItemModels } from "./Sort/ItemsUtility"
+import CreateState  from "./State"
 
 function App() {
-  const [options,] = useState(() => {
-    const val = {
-      items: null,
-      asc: true,
-      algorithm: "bubblesort",
-      pause: 500,
-      setShowOptions: (show) => { },
-      sorted:true,
-      sorting:false
-    }
-    val.setSorting=(sorting)=>{
-      val.sorting=sorting
-    }
-    val.setSorted=(sorted)=>{
-      //console.log("options setSorted(" + sorted + ")")
-      val.sorted = sorted
-    }
-    val.setItems = (items) => {
-      //console.log("options setItems") 
-      val.items = items 
-      val.setSorted(false)
-    }
-    return val
-  })
-
+  const [options,] = useState(CreateState)
   return (
     <>
       <div className="is-flex is-root has-background-black">
