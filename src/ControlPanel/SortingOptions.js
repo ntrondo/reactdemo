@@ -7,7 +7,7 @@ export default function SortingOptions(wrappedOptions) {
     const options = wrappedOptions.options
     const[showOptions,setShowOptions] = useState(options.showOptions)
     useEffect(()=>{
-        console.log("SortingOptions useEffect()")        
+        //console.log("SortingOptions useEffect()")        
         options.setItems(GenerateInitialItemModels(20))
         options.setShowOptions= combineFunctions(options.setShowOptions, setShowOptions)
     },[])

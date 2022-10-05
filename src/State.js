@@ -1,12 +1,24 @@
 export default function CreateState() {
     const val = {
         items: null,
+        setItems:(items)=>{
+            //console.log("setItems(" + items.length + ")")
+        },
         asc: true,
         algorithm: "bubblesort",
         pause: 500,
         showOptions: false,
+        setShowOptions:(show)=>{
+            //console.log("setShowOptions(" + show + ")")
+        },
         sorted: true,
-        sorting: false
+        setSorted:(sorted)=>{
+            //console.log("setSorted(" + sorted + ")")
+        },
+        sorting: false,
+        setSorting:(sorting)=>{
+            //console.log("setSorting(" + sorting + ")")
+        }
     }
     val.setShowOptions = combineFunctions(val.setShowOptions, (show) => {
         val.showOptions = show
@@ -15,11 +27,9 @@ export default function CreateState() {
             val.sorting = sorting
         })
     val.setSorted = combineFunctions(val.setSorted, (sorted) => {
-        //console.log("options setSorted(" + sorted + ")")
         val.sorted = sorted
     })
     val.setItems = combineFunctions(val.setItems, (items) => {
-        //console.log("options setItems") 
         val.items = items
         val.setSorted(items.length < 2)
     })
