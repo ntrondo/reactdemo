@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Demo React App to demonstrate understanding of key concepts
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
