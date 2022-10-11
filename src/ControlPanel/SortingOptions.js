@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import {GenerateInitialItemModels} from "../Sort/ItemsUtility"
-import { Sort } from "../Sort/ItemsUtility";
 import { combineFunctions } from "../State";
 
-export default function SortingOptions(wrappedOptions) {
-    const options = wrappedOptions.options
+export default function SortingOptions({options}) {
     const[showOptions,setShowOptions] = useState(options.showOptions)
     useEffect(()=>{
         //console.log("SortingOptions useEffect()")        
@@ -12,22 +10,21 @@ export default function SortingOptions(wrappedOptions) {
         options.setShowOptions= combineFunctions(options.setShowOptions, setShowOptions)
     },[])
     const algorithmChanged = (e)=>{
-        const value = e.target.value
         options.algorithm = e.target.value
         if(options.sorting){
             options.setSorting(false)
         }
-        console.log("algorithm changed to " + value)
+        //console.log("algorithm changed to " + value)
     }
     const countChanged = (e)=>{        
         const val = parseInt( e.target.value)
-        console.log("SortingOptions countChanged() " + val)
+        //console.log("SortingOptions countChanged() " + val)
         options.setItems(GenerateInitialItemModels(val))        
     }
     const speedChanged = (e)=>{
         const val = parseInt( e.target.value)
-        console.log("SortingOptions speedChanged() " + val)
-        options.pause = val
+        //console.log("SortingOptions speedChanged() " + val)
+        options.setPause(val)
     }
     const animationChanged = (e)=>{}
     if(!showOptions)

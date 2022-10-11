@@ -12,7 +12,7 @@ function CalculateBaseStyles(item, options) {
         height: height + "%",
         top: (100 - height) + "%",
         width: Math.floor(100 / options.items.length - 2 * margin),
-        transition: "left " + options.pause + "ms"
+        transition: "inherit"
     }
 }
 function CalculateStyles(baseStyles, item) {
@@ -30,11 +30,14 @@ function CalculateStyles(baseStyles, item) {
 }
 export default function HistogramItem({ itemModel, options }) {
     const [index, setIndex] = useState(() => { return GetIndex(itemModel) })
-    const [isHighlighted, setIsHighlighted] = useState(itemModel.isHighlighted);
+    const [isHighlighted, setIsHighlighted] = useState(itemModel.isHighlighted)
+    
     const baseStyles = useMemo(() => {
+        //Do this once
         return CalculateBaseStyles(itemModel, options)
-    },[])
+    },[itemModel,options])
     const styles = useMemo(() => {
+        //Do this every time index or highlight changes.
         return CalculateStyles(baseStyles, itemModel)
     }, [index, isHighlighted])
     useEffect(() => {
@@ -46,6 +49,7 @@ export default function HistogramItem({ itemModel, options }) {
             itemModel.isHighlighted = ih
         })
         itemModel.setIsHighlighted = combineFunctions(itemModel.setIsHighlighted, setIsHighlighted)
+        
     }, [itemModel])
     return (
         <div className="is-histogram-item" style={styles}>

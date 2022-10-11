@@ -16,8 +16,7 @@ function renderStopButton(showButton, onClicked) {
         <a className="is-button" onClick={onClicked}>&#9632;</a>
     </div>)
 }
-export default function VerticalMenu(wrappedOptions) {
-    const options = wrappedOptions.options
+export default function VerticalMenu({options}) {
     const [sorting, setSorting] = useState(options.sorting)
     const [sorted, setSorted] = useState(options.sorted)
     useEffect(()=>{  
