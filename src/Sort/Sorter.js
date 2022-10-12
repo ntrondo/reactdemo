@@ -17,6 +17,8 @@ export function GenerateInitialItemModels(count) {
     return items
 }
 export function Sort(options) {
+    if(options.sorting)
+    return
     options.setSorting(true)
     const items = [...options.items]
     items.sort((a,b)=>{return a.index - b.index})

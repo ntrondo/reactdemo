@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {GenerateInitialItemModels} from "../Sort/ItemsUtility"
+import {GenerateInitialItemModels, Sort} from "../Sort/Sorter"
 import { combineFunctions } from "../State";
 
 export default function SortingOptions({options}) {
@@ -13,6 +13,9 @@ export default function SortingOptions({options}) {
         options.algorithm = e.target.value
         if(options.sorting){
             options.setSorting(false)
+            setTimeout(()=>{
+                Sort(options)
+            }, options.pause * 2)            
         }
         //console.log("algorithm changed to " + value)
     }

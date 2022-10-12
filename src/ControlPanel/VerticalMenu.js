@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Sort } from "../Sort/ItemsUtility";
+import { Sort } from "../Sort/Sorter";
 import { combineFunctions } from "../State";
 
 function renderPlayButton(showPlayButton, onClicked) {

@@ -5,24 +5,27 @@ function GetIndex(itemModel) {
     return itemModel.index
 }
 function CalculateBaseStyles(item, options) {
-    let margin = 1;
+    let marginRelativeToItem = 0.12
+    let spaceAvailablePerItem = 100 / options.items.length
+    let marginRelativeToParent = spaceAvailablePerItem * marginRelativeToItem
+    let width = spaceAvailablePerItem - 2 * marginRelativeToParent
     let height = item.height * 100;
     return {
-        margin: margin,
+        margin: marginRelativeToParent,
         height: height + "%",
         top: (100 - height) + "%",
-        width: Math.floor(100 / options.items.length - 2 * margin),
+        width: width,
         transition: "inherit"
     }
 }
 function CalculateStyles(baseStyles, item) {
-    let left = item.index * (baseStyles.width + 2 * baseStyles.margin);
+    let left = item.index * (baseStyles.width + 2 * baseStyles.margin) + baseStyles.margin
     let myStyle = {
         top: baseStyles.top,
         height: baseStyles.height,
-        width: baseStyles.width + "%",
+        width: baseStyles.width.toFixed(1) + "%",
         transition: baseStyles.transition,
-        left: left + "%"
+        left: left.toFixed(1) + "%"
     }
     if (item.isHighlighted)
         myStyle.backgroundImage = "linear-gradient(gold, red)"
@@ -36,6 +39,7 @@ export default function HistogramItem({ itemModel, options }) {
         //Do this once
         return CalculateBaseStyles(itemModel, options)
     },[itemModel,options])
+    console.log(baseStyles)
     const styles = useMemo(() => {
         //Do this every time index or highlight changes.
         return CalculateStyles(baseStyles, itemModel)
