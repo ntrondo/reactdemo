@@ -6,7 +6,7 @@ function Histogram({ options }) {
     const [, setItems] = useState([]);
     const [effectPause, setEffectPause] = useState(options.pause)
     useEffect(() => {
-        //Append local hooks to setters
+        //Append local setters to state setters
         options.setItems = combineFunctions(options.setItems, setItems)        
         options.setPause = combineFunctions(options.setPause, setEffectPause)
         //Run local setter as useState was called with empty array

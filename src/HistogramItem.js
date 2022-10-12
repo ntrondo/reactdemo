@@ -4,6 +4,7 @@ import { combineFunctions } from "./State";
 function GetIndex(itemModel) {
     return itemModel.index
 }
+/**Calculate style components that does not change with index and isHighlighted. */
 function CalculateBaseStyles(item, options) {
     let marginRelativeToItem = 0.12
     let spaceAvailablePerItem = 100 / options.items.length
@@ -18,6 +19,9 @@ function CalculateBaseStyles(item, options) {
         transition: "inherit"
     }
 }
+/**Calculate style components that changes with index and isHighlighted.
+ * use precalculations from baseStyles.
+ */
 function CalculateStyles(baseStyles, item) {
     let left = item.index * (baseStyles.width + 2 * baseStyles.margin) + baseStyles.margin
     let myStyle = {
@@ -36,7 +40,7 @@ export default function HistogramItem({ itemModel, options }) {
     const [isHighlighted, setIsHighlighted] = useState(itemModel.isHighlighted)
     
     const baseStyles = useMemo(() => {
-        //Do this once
+        //run once per item
         return CalculateBaseStyles(itemModel, options)
     },[itemModel,options])
     
@@ -45,10 +49,14 @@ export default function HistogramItem({ itemModel, options }) {
         return CalculateStyles(baseStyles, itemModel)
     }, [index, isHighlighted])
     useEffect(() => {
+        //run once per item
+        //Create items setter function, itemModel.setIndex is undefined.
         itemModel.setIndex = combineFunctions(itemModel.setIndex, (ni) => {
             itemModel.index = ni
         })
+        //Append this components setIndex to items setter.
         itemModel.setIndex = combineFunctions(itemModel.setIndex, setIndex)
+        //Repeat the above for setIsHighLighted
         itemModel.setIsHighlighted = combineFunctions(itemModel.setIsHighlighted, (ih) => {
             itemModel.isHighlighted = ih
         })
