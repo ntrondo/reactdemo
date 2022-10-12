@@ -16,6 +16,12 @@ export function GenerateInitialItemModels(count) {
     })
     return items
 }
+export function Reset(options){
+    let index = 0
+    const moves = options.items.map(i=>({id:i.id, toIndex:index++, highlight:false}))
+    AnimateMove(options.items, moves)
+    options.setSorted(false)
+}
 export function Sort(options) {
     if(options.sorting)
     return

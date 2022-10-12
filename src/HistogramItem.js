@@ -39,7 +39,7 @@ export default function HistogramItem({ itemModel, options }) {
         //Do this once
         return CalculateBaseStyles(itemModel, options)
     },[itemModel,options])
-    console.log(baseStyles)
+    
     const styles = useMemo(() => {
         //Do this every time index or highlight changes.
         return CalculateStyles(baseStyles, itemModel)
