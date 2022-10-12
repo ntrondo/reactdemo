@@ -5,6 +5,7 @@ import CreateState  from "./State"
 import InitialMessage from "./InitialMessage";
 
 function App() {
+  //Create options(state) once.
   const [options,] = useState(CreateState)
   return (
     <>
