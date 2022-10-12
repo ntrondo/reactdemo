@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import {GenerateInitialItemModels, Sort} from "../Sort/Sorter"
 import { combineFunctions } from "../State";
-
+function StopAndResumeSorting(options){
+    if(options.sorting){
+        options.setSorting(false)
+        setTimeout(()=>{
+            Sort(options)
+        }, options.pause * 2)            
+    }
+}
 export default function SortingOptions({options}) {
     const[showOptions,setShowOptions] = useState(options.showOptions)
     useEffect(()=>{
@@ -10,23 +17,16 @@ export default function SortingOptions({options}) {
         options.setShowOptions= combineFunctions(options.setShowOptions, setShowOptions)
     },[])
     const algorithmChanged = (e)=>{
+        StopAndResumeSorting(options)
         options.algorithm = e.target.value
-        if(options.sorting){
-            options.setSorting(false)
-            setTimeout(()=>{
-                Sort(options)
-            }, options.pause * 2)            
-        }
-        //console.log("algorithm changed to " + value)
     }
     const countChanged = (e)=>{        
+        StopAndResumeSorting(options)
         const val = parseInt( e.target.value)
-        //console.log("SortingOptions countChanged() " + val)
         options.setItems(GenerateInitialItemModels(val))        
     }
     const speedChanged = (e)=>{
         const val = parseInt( e.target.value)
-        //console.log("SortingOptions speedChanged() " + val)
         options.setPause(val)
     }
     const animationChanged = (e)=>{}
