@@ -9,7 +9,7 @@ export default function InitialMessage({ options }) {
         options.setSorting = combineFunctions(options.setSorting, setSorting)
         options.setSorted = combineFunctions(options.setSorted, setSorted)
         options.setShowOptions = combineFunctions(options.setShowOptions, setShowOptions)
-    }, [])
+    }, [options])
     if (sorting || sorted || showOptions) {
         return null
     }

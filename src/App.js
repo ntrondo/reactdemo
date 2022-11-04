@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Histogram from "./Histogram";
 import ControlPanel from "./ControlPanel/Panel";
 import CreateState  from "./State"

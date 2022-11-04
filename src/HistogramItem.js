@@ -47,7 +47,7 @@ export default function HistogramItem({ itemModel, options }) {
     const styles = useMemo(() => {
         //Do this every time index or highlight changes.
         return CalculateStyles(baseStyles, itemModel)
-    }, [index, isHighlighted])
+    }, [index, isHighlighted, baseStyles, itemModel])
     useEffect(() => {
         //run once per item
         //Create items setter function, itemModel.setIndex is undefined.

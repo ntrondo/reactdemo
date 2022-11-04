@@ -1,12 +1,11 @@
 export default function Sort(items, comp, movefn) {
     console.log("SelectionSort.Sort()")
     const allMoves = []
-    let extractionIndex, innerMoves, newIndex
+    let extractionIndex, innerMoves
     for (let i = 0; i < items.length; i++) {
         extractionIndex = i + GetIndex(items.slice(i, items.length), comp)
         if (extractionIndex === i)
             continue
-        //console.log("InsertionSort.Sort() moving item from " + i + " to " + newIndex)
         innerMoves = GetMoves(items, i, extractionIndex);
         allMoves.push(innerMoves)
         movefn(items, innerMoves)

@@ -15,7 +15,7 @@ export default function SortingOptions({options}) {
         //console.log("SortingOptions useEffect()")        
         options.setItems(GenerateInitialItemModels(20))
         options.setShowOptions= combineFunctions(options.setShowOptions, setShowOptions)
-    },[])
+    },[options])
     const algorithmChanged = (e)=>{
         StopAndResumeSorting(options)
         options.algorithm = e.target.value
@@ -29,7 +29,6 @@ export default function SortingOptions({options}) {
         const val = parseInt( e.target.value)
         options.setPause(val)
     }
-    const animationChanged = (e)=>{}
     if(!showOptions)
     return <></>;
   
@@ -66,12 +65,6 @@ export default function SortingOptions({options}) {
                     <option value="300">Fast</option>
                 </select>
             </div>
-            {/* <div>
-                <label>Animation:</label>
-                <select value="smooth" onChange={animationChanged}>
-                    <option value="smooth">Smooth</option>
-                </select>
-            </div> */}
         </div>
     )
 }
