@@ -22,8 +22,8 @@ function CalculateBaseStyles(item, options) {
 /**Calculate style components that changes with index and isHighlighted.
  * use precalculations from baseStyles.
  */
-function CalculateStyles(baseStyles, item) {
-    let left = item.index * (baseStyles.width + 2 * baseStyles.margin) + baseStyles.margin
+function CalculateStyles(baseStyles, index, isHighlighted) {
+    let left = index * (baseStyles.width + 2 * baseStyles.margin) + baseStyles.margin
     let myStyle = {
         top: baseStyles.top,
         height: baseStyles.height,
@@ -31,7 +31,7 @@ function CalculateStyles(baseStyles, item) {
         transition: baseStyles.transition,
         left: left.toFixed(1) + "%"
     }
-    if (item.isHighlighted)
+    if (isHighlighted)
         myStyle.backgroundImage = "linear-gradient(gold, red)"
     return myStyle
 }
@@ -46,8 +46,8 @@ export default function HistogramItem({ itemModel, options }) {
     
     const styles = useMemo(() => {
         //Do this every time index or highlight changes.
-        return CalculateStyles(baseStyles, itemModel)
-    }, [index, isHighlighted, baseStyles, itemModel])
+        return CalculateStyles(baseStyles, index, isHighlighted)
+    }, [index, isHighlighted, baseStyles])
     useEffect(() => {
         //run once per item
         //Create items setter function, itemModel.setIndex is undefined.
